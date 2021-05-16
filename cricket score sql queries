@@ -1,0 +1,49 @@
+[Cricket DML/DDL - alter t_match_score_card table]
+answer- 
+
+alter table t_match_score_card ADD CONSTRAINT FK_match foreign key(match_id)
+references t_match_record(match_id);
+
+alter table t_match_score_card ADD CONSTRAINT FK_player foreign key(player_id)
+references t_player(player_id);
+
+//---------------------------------------------------------------------------------------------------------
+[Cricket DML/DDL - Update t_player table]
+answer-
+
+update t_player
+set total_wickets=case
+when(player_city='BANGALORE' and player_name like 'A%')
+then total_wickets+5
+when(player_city='DELHI' and player_name like 'A%') 
+then total_wickets+7
+else
+total_wickets
+END;
+
+//---------------------------------------------------------------------------------------------------
+Function- Scaler & Aggregate[average run of player based on name]
+answer-
+
+select p.player_id,round(avg(m.player_runs)) as AVERAGE_RUNS from 
+t_player p  join t_match_score_card m on
+p.player_id=m.player_id where
+p.player_name like 'S%'
+group by p.player_id
+order by AVERAGE_RUNS desc;
+//-------------------------------------------------------------------------
+ 
+Function and SubQuery(player details)
+ans-
+
+select distinct p.player_id,p.player_name,p.player_city 
+from t_player p join t_match_score_card m  on
+p.player_id=m.player_id join
+t_match_record r on m.match_id=r.match_id
+where m.waysof_dismissal="STUMPED" and r.played_city="BANGLORE"
+order by p.player_name desc;
+
+
+
+
+
