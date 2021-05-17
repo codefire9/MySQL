@@ -40,7 +40,7 @@ select distinct p.player_id,p.player_name,p.player_city
 from t_player p join t_match_score_card m  on
 p.player_id=m.player_id join
 t_match_record r on m.match_id=r.match_id
-where m.waysof_dismissal="STUMPED" and r.played_city="BANGLORE"
+where m.waysof_dismissal="STUMPED" and r.played_city="BANGALORE"
 order by p.player_name desc;
 
 
